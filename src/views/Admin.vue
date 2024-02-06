@@ -1,26 +1,46 @@
 <template>
   <div>
-    <h2>Admin Page</h2>
-    <div v-if="cartItems && cartItems.length > 0">
-      <h3>Cart Items</h3>
-      <ul>
-        <li v-for="(item, index) in cartItems" :key="index">
-          {{ item.name }} - ${{ item.cost }} - Quantity: {{ item.quantity }}
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>No items in cart.</p>
-    </div>
+    <h2 class="text-2xl font-semibold mb-4">Admin Page</h2>
+    <ul>
+      <li v-for="item in cartItems" :key="item.product_id" class="mb-2">
+        <div>
+          <span class="font-semibold">{{ item.name }}</span>
+          <span class="text-gray-500"> - ${{ item.cost }} - Quantity: {{ item.quantity }}</span>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    cartItems: {
-      type: Array,
-      required: true
+  data() {
+    return {
+      cartItems: []
+    };
+  },
+  created() {
+  if (this.$route.params.cartItems) {
+    this.cartItems = JSON.parse(this.$route.params.cartItems);
+  } else {
+    console.warn('Route parameter "cartItems" is not provided.');
+  }
+}
+,
+
+  methods: {
+    parseRouteParams() {
+      try {
+        // Check if the cartItems parameter exists
+        if (this.$route.params.cartItems) {
+          // Parse the JSON string from route params
+          this.cartItems = JSON.parse(this.$route.params.cartItems);
+        } else {
+          console.error('Route parameter "cartItems" is undefined');
+        }
+      } catch (error) {
+        console.error('Error parsing route parameter "cartItems":', error);
+      }
     }
   }
 };

@@ -10,14 +10,35 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
+
     {
       path: "/admin",
-      name: "admin",
+      name: "Admin", // Ensure the name is 'Admin'
       component: Admin,
-      props: true // Allow passing route params as props to the component
+      props: true,
     },
-    // Other routes if any
-  ]
+
+    {
+      path: "/LoginView",
+      name: "LoginView",
+      component: () => import("../views/LoginView.vue"),
+    },
+    {
+      path: "/ProductView",
+      name: "ProductView",
+      component: () => import("../views/ProductView.vue"),
+    },
+    {
+      path: "/CartView",
+      name: "CartView",
+      component: () => import("../views/CartView.vue"),
+    },
+    {
+      path: "/PaymentView",
+      name: "PaymentView",
+      component: () => import("../views/PaymentView.vue"),
+    },
+  ],
 });
 
 export default router;
